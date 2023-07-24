@@ -66,3 +66,12 @@
     .wrapper {
       padding-top: 20px;
     }
+
+    /* ids */
+
+    #timer {
+      text-align: right;
+      margin: 0px;
+      font-size: .75em;
+      padding: 10px;
+    }
