@@ -8,29 +8,18 @@ var highscorepage = document.querySelector('#highscorepage');
 var submit = document.querySelector('#button');
 var list = document.querySelector('#list');
 var i = 0;
-var sec = 10;
-var scoreforgame = 0;
+var sec = 120;
+var r = 0;
 var highscorelist = [];
-var scorestoprint = [];
+// var scorestoprint = [];
 
 // hide trivia answers & Highscores
 answers.style.display = "none";
 highscorepage.style.display = "none";
 
 
-
-// show score from local storage or display 0
-var r = JSON.parse(localStorage.getItem("r")); // r = right
-if (r === null) {
-    r = 0;
-}
-var w = JSON.parse(localStorage.getItem("w")); // w = wrong
-if (w === null) {
-    w = 0;
-}
-
 // questions
-var questionslist = ['Could i BE wearing anymore clothes?', 'whos fica?'];
+var questionslist = ["Who said: 'If he doesn't like you this is all a moo point. ... Yeah, it's like a cow's opinion. It just doesn't matter. It's moo. ?'", "Who said: 'Gum would be perfection.'?", "Who said: 'Pivot! Pivot! Pivot! Pivot. Pivot. Pivot.'?", "Who said: 'That's right, I stepped up! She's my friend and she needed help. If I had to, I'd pee on any one of you!'?", "Who said: 'Seven!🖐✌'?", "Who said: 'My eyes. MY EYES!'?", "Who said: 'You hung up on the pizza place?! I don't hang up on your friends..'?", "Who said: 'I'm not great at the advice. Can I interest you in a sarcastic comment?'?", "Who said: 'I'm gonna go out on a limb and say no divorces in '99!'?", "Who said: 'Oh, I wish I could, but I don't want to.'?", "Who said: 'Isn't that just kick-you-in-the-crotch, spit-on-your-neck fantastic?'?", "Who said: 'Welcome to the real world. It sucks. You're gonna love it.'?"];
 
 // when start button is clicked quiz starts & first question is shown
 start.addEventListener("click", function () {
@@ -54,13 +43,15 @@ function countdown() {
         if (sec < 0) {
             clearInterval(x);
             timer.textContent = 'OUT OF TIME!';
+            questions.style.display = "none";
+            highscore()
 
         }
 
         // if all questions are answered stop timer
         if (i === questionslist.length) {
             clearInterval(x);
-            return timer.textContent = "SCORE: " + scoreforgame * 5;
+            return timer.textContent = "SCORE: " + r * 5;
         }
 
 
@@ -77,20 +68,58 @@ answers.addEventListener("click", function (event) {
 
     // right answers to qs
     if (i === 0) {
-        var correctanswer = "chandler";
+        var correctanswer = "joey";
 
     }
     if (i === 1) {
+        correctanswer = "chandler";
+
+    }
+    if (i === 2) {
+        correctanswer = "ross";
+
+    }
+    if (i === 3) {
+        correctanswer = "joey";
+
+    }
+    if (i === 4) {
+        correctanswer = "monica";
+
+    }
+    if (i === 5) {
+        correctanswer = "phoebe";
+
+    }
+    if (i === 6) {
+        correctanswer = "joey";
+
+    }
+    if (i === 7) {
+        correctanswer = "chandler";
+
+    }
+    if (i === 8) {
+        correctanswer = "ross";
+
+    }
+    if (i === 9) {
+        correctanswer = "phoebe";
+
+    }
+    if (i === 10) {
         correctanswer = "rachel";
+
+    }
+    if (i === 11) {
+        correctanswer = "monica";
 
     }
     // check if the answer was correct
     if (name === correctanswer) {
         r++;
-        scoreforgame++;
         keepscore()
     } else {
-        w++;
         // take time off timer for wrong answer
         sec = sec - 5;
 
@@ -113,14 +142,12 @@ function nextquestion() {
 }
 
 // display score
-score.textContent = r + " Right & " + w + " Wrong";
+score.textContent = r + " Answers Right";
 
 // update score and save to local storage
 function keepscore() {
 
-    score.textContent = r + " Right & " + w + " Wrong";
-    localStorage.setItem("r", r);
-    localStorage.setItem("w", w);
+    score.textContent = r + " Answers Right";
 }
 
 // flash timer red if answer is wrong and time is deducted
@@ -145,40 +172,41 @@ submit.addEventListener("click", function (event) {
     // save input
     var person = {
         initials: document.getElementById('initials').value.toUpperCase(),
-        score: scoreforgame * 5
+        score: r * 5
     }
     // add scores & initials to an array
     highscorelist.push(person);
-    // create stringify array for storagelog
-    
 
     // hide submit button after submitted new score
     submit.style.display = "none";
     
     // add score table to local storage
     localStorage.setItem("highscorelist", JSON.stringify(highscorelist));
+    
+    // sort highscores from highest to lowest
+    const sortedScores = highscorelist.sort((p1, p2) => (p1.score < p2.score) ? 1 : (p1.score > p2.score) ? -1 : 0);
 
     // go through array and create lis
     let index = 0;
-    highscorelist.forEach(() => {
-    
+    sortedScores.forEach(() => {
+
         let li = document.createElement('LI');
-        li.textContent = highscorelist[index].initials + " ... " + highscorelist[index].score;
-        
+        li.textContent = sortedScores[index].initials + " ... " + sortedScores[index].score;
+
         list.appendChild(li);
         index++;
-    return list;
-});
+    });
 })
 
 function highscore() {
     highscorepage.style.display = "block";
     answers.style.display = "none";
 
+
 }
 
 
 // calls highscores saved in localstorage
-function renderscores () {
+function renderscores() {
     highscorelist = JSON.parse(localStorage.getItem("highscorelist") || "[]");
 }
