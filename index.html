@@ -2,40 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/reset.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Friends Trivia!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/css/reset.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Friends Trivia!</title>
 </head>
 <header style="background-image: url(./assets/images/headerbackground.jpg);">
-    <h1>FRIENDS TRIVIA</h1>
+  <h1>FRIENDS TRIVIA</h1>
 
 </header>
+
 <body>
-    <div class="wrapper">
-        <div class="container">
-            <p id="score"></p>
-          <div>
-            <p id="timer"></p>
-          </div>
-          <div id="startpage">
-            <h2>How well do you know FRIENDS?<br>Select which Friend said the following quotes:</h2>
+  <div class="wrapper">
+    <div class="container">
+      <p id="score"></p>
+      <div>
+        <p id="timer"></p>
+      </div>
+      <div id="startpage">
+        <h2>How well do you know FRIENDS?<br>Select which Friend said the following quotes:</h2>
+      </div>
+      <div id="highscorepage">
+        <h3>Enter Your Initials to Save Your Score:</h3>
+        <label for="initials" >Initials:</label>
+        <input type="text" id="initials" name="initials" placeholder="Type Here">
+        <input id= "button" type="submit" value="Submit">
+        <h2 id="highscore">HIGHSCORES</h2>
+        <ul id="list"></ul>
+      </div>
+      <button id="start">START</button>
+      <div class="items">
+        <h2 id="questions"></h2>
+        <div id="answers">
+          <button data-name="joey">Joey</button>
+          <button data-name="chandler">Chandler</button>
+          <button data-name="ross">Ross</button>
+          <button data-name="pheobe">Pheobe</button>
+          <button data-name="rachel">Rachel</button>
+          <button data-name="monica">Monica</button>
         </div>
-        <button id="start">START</button>
-          <div class="items">
-            <h2 id="questions"></h2>
-            <div id="answers">
-                <button data-name="joey">Joey</button>
-                <button data-name="chandler">Chandler</button>
-                <button data-name="ross">Ross</button>
-                <button data-name="pheobe">Pheobe</button>
-                <button data-name="rachel">Rachel</button>
-                <button data-name="monica">Monica</button>
-            </div>
-          </div>
-        </div>
+      </div>
     </div>
+  </div>
 
 </body>
 
@@ -45,4 +54,3 @@
 
 <!-- Q1 -->
 <!-- Answers as button s & buttons -->
-

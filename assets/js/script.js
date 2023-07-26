@@ -4,12 +4,18 @@ var start = document.querySelector("#start");
 var score = document.querySelector("#score");
 var startpage = document.querySelector("#startpage");
 var timer = document.querySelector('#timer');
+var highscorepage = document.querySelector('#highscorepage');
+var submit = document.querySelector('#button');
+var list = document.querySelector('#list');
 var i = 0;
-var sec = 30;
+var sec = 10;
 var scoreforgame = 0;
+var highscorelist = [];
+var scorestoprint = [];
 
-// hide trivia answers
+// hide trivia answers & Highscores
 answers.style.display = "none";
+highscorepage.style.display = "none";
 
 
 
@@ -54,7 +60,6 @@ function countdown() {
         // if all questions are answered stop timer
         if (i === questionslist.length) {
             clearInterval(x);
-            // 5 points for every correct answer
             return timer.textContent = "SCORE: " + scoreforgame * 5;
         }
 
@@ -70,6 +75,7 @@ answers.addEventListener("click", function (event) {
     var selected = event.target;
     var name = selected.getAttribute("data-name");
 
+    // right answers to qs
     if (i === 0) {
         var correctanswer = "chandler";
 
@@ -78,7 +84,7 @@ answers.addEventListener("click", function (event) {
         correctanswer = "rachel";
 
     }
-
+    // check if the answer was correct
     if (name === correctanswer) {
         r++;
         scoreforgame++;
@@ -99,6 +105,11 @@ answers.addEventListener("click", function (event) {
 function nextquestion() {
     i++;
     questions.textContent = questionslist[i];
+
+    //    if all questions are answered to to high scores page
+    if (i === questionslist.length) {
+        highscore()
+    }
 }
 
 // display score
@@ -123,4 +134,51 @@ function wronganswer() {
             timer.style.color = 'black';
         }
     }, 250);
+}
+
+// create new high score when click the submit button
+submit.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    renderscores()
+
+    // save input
+    var person = {
+        initials: document.getElementById('initials').value.toUpperCase(),
+        score: scoreforgame * 5
+    }
+    // add scores & initials to an array
+    highscorelist.push(person);
+    // create stringify array for storagelog
+    
+
+    // hide submit button after submitted new score
+    submit.style.display = "none";
+    
+    // add score table to local storage
+    localStorage.setItem("highscorelist", JSON.stringify(highscorelist));
+
+    // go through array and create lis
+    let index = 0;
+    highscorelist.forEach(() => {
+    
+        let li = document.createElement('LI');
+        li.textContent = highscorelist[index].initials + " ... " + highscorelist[index].score;
+        
+        list.appendChild(li);
+        index++;
+    return list;
+});
+})
+
+function highscore() {
+    highscorepage.style.display = "block";
+    answers.style.display = "none";
+
+}
+
+
+// calls highscores saved in localstorage
+function renderscores () {
+    highscorelist = JSON.parse(localStorage.getItem("highscorelist") || "[]");
 }
