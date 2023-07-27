@@ -11,7 +11,6 @@ var i = 0;
 var sec = 120;
 var r = 0;
 var highscorelist = [];
-// var scorestoprint = [];
 
 // hide trivia answers & Highscores
 answers.style.display = "none";
